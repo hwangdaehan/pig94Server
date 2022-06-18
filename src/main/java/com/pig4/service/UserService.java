@@ -32,7 +32,7 @@ public class UserService {
 	}
 	
 	public UserVO save(UserVO userVO) {
-		userRepository.save(userVO);
+		userVO = userRepository.save(userVO);
 		return userVO;
 	}
 }

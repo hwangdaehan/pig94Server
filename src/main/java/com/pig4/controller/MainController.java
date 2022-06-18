@@ -21,7 +21,7 @@ import com.pig4.vo.ResultVO;
 import com.pig4.vo.UserVO;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class MainController {
 	@Autowired
 	UserService userService;
@@ -43,12 +43,17 @@ public class MainController {
 	}
 	
 	//회원등록
-    @PostMapping(value="")
+    @PostMapping(value="/save")
     @ResponseBody
     public ResultVO save(@ModelAttribute UserVO userVO){
-    	ResultVO resultVO =new ResultVO();
+    	ResultVO resultVO = new ResultVO();
     	
-    	UserVO user =userService.save(userVO);
+    	String salt = CommonUtils.Salt();
+		//비밀번호 암호화
+		String enc_pw = CommonUtils.SHA512(userVO.getPassword(), salt);
+		userVO.setPassword(enc_pw);
+		
+    	UserVO user = userService.save(userVO);
     	
     	if(!CommonUtils.isEmpty(user)) {
     		resultVO.setData(user);
@@ -61,7 +66,7 @@ public class MainController {
         return resultVO ;
     }
     
-    @PostMapping(value="login")
+    @PostMapping(value="/login")
     @ResponseBody
     public ResultVO login(@RequestParam String id, @RequestParam String password) {
     	ResultVO resultVO =new ResultVO();

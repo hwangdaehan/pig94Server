@@ -1,5 +1,6 @@
 package com.pig4.vo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +23,25 @@ public class UserVO {
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private long seq;
 	
+	@Column(name="social_login_type")
+	private String socialLoginType;
+	
+	@Column
 	private String id;
+	
+	@Column
 	private String name;
+	
+	@Column
 	private String gender;
-	private int age_group;
+	
+	@Column(name="age_group")
+	private int ageGroup;
+	
+	@Column(name="user_state")
+	private int userState;
+	
+	@Column
 	private String password;
 	
 	@Builder
@@ -66,12 +82,13 @@ public class UserVO {
 		this.gender = gender;
 	}
 
-	public int getAge_group() {
-		return age_group;
+	public int getAgeGroup() {
+		return ageGroup;
 	}
 
-	public void setAge_group(int age_group) {
-		this.age_group = age_group;
+
+	public void setAgeGroup(int ageGroup) {
+		this.ageGroup = ageGroup;
 	}
 
 
@@ -82,6 +99,26 @@ public class UserVO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public String getSocialLoginType() {
+		return socialLoginType;
+	}
+
+
+	public void setSocialLoginType(String socialLoginType) {
+		this.socialLoginType = socialLoginType;
+	}
+
+
+	public int getUserState() {
+		return userState;
+	}
+
+
+	public void setUserState(int userState) {
+		this.userState = userState;
 	}
 
 }
