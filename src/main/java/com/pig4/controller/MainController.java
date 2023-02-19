@@ -27,11 +27,6 @@ public class MainController {
 	UserService userService;
 	
 	
-	@RequestMapping(value="test")
-	@ResponseBody public String test() {
-		return "asd";
-	}
-	
 	@GetMapping(value="list", produces= {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody public List<UserVO> findList(){
 		return userService.findAll();
@@ -51,7 +46,6 @@ public class MainController {
     	String salt = CommonUtils.Salt();
 		//비밀번호 암호화
 		String enc_pw = CommonUtils.SHA512(userVO.getPassword(), salt);
-		userVO.setPassword(enc_pw);
 		
     	UserVO user = userService.save(userVO);
     	
