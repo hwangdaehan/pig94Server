@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pig4.repository.WishItemRepository;
 import com.pig4.vo.WishVO;
+import com.pig4.vo.param.WishParamVO;
 
 @Service
 public class WishItemService {
@@ -15,13 +16,19 @@ public class WishItemService {
 	WishItemRepository wishItemRepository;
 	
 	
-	public WishVO save(WishVO wishVO) {
-		wishVO = wishItemRepository.save(wishVO);
-		return wishVO;
+	public WishVO save(WishParamVO paramVO) {
+		WishVO wish = WishVO.builder().userSeq(paramVO.getUserSeq()).productName(paramVO.getProductName())
+									  .category(paramVO.getCategory()).brandName(paramVO.getBrandName())
+									  .price(paramVO.getPrice()).saveMoney(paramVO.getSaveMoney())
+									  .purchaseStatus(paramVO.getPurchaseStatus()).build();
+		
+		wishItemRepository.save(wish);
+		
+		return wish;
 	}
 	
-	public List<WishVO> selectList() {
-		List<WishVO> resultList = wishItemRepository.findByDeleteYn("N");
+	public List<WishVO> selectUserList(long userSeq) {
+		List<WishVO> resultList = wishItemRepository.findByUserSeq(userSeq);
 		return resultList;
 	}
 	
